@@ -9,7 +9,10 @@ import ProductDetails from "./pages/ProductDetails";
 export default class App extends React.Component {
   state = {
     currentScreen: "home",
+   
   };
+
+  
 
   renderScreen = () => {
     switch (this.state.currentScreen) {
