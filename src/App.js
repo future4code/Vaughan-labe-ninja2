@@ -12,64 +12,128 @@ import { key } from "./constants/apiKey";
 export default class App extends React.Component {
   state = {
     currentScreen: "home",
-    cart: []
+    jobList: []
   };
 
   componentDidUpdate() {
     localStorage.setItem(
       "cart",
-      JSON.stringify(this.state.cart)
+      JSON.stringify(this.state.jobList)
     );
   }
 
   componentDidMount() {
     const stuffInCart = JSON.parse(localStorage.getItem("cart"));
     if (stuffInCart) {
-      this.setState({ cart: stuffInCart });
+      this.setState({ jobList: stuffInCart });
     }
   }
 
-  getJobById = (id) => {
-    Axios.get(`${baseURL}/jobs/${id}`, key)
-    .then(response => {
-      this.setState({job: response.data})
-      this.addToCart()   
-    })
-    .catch(err => { alert(err.response.data.error) })
+  getAllJobs = () => {
+    Axios.get(`${baseURL}/jobs`, key)
+      .then((response) => {
+
+        this.setState({ jobList: response.data.jobs })
+      })
+      .catch(err => { alert(err.response.data.error) })
   }
 
-  addToCart = () => {
-    const jobInCart = {... this.state.job}
-    const addJob = [... this.state.cart, jobInCart]
-    this.setState({cart: addJob}) 
-    console.log(this.state.cart)
-  };
+  updateJobTrue = (id) => {
+    const body = {
+      taken: true
+    }
 
-  deleteItemCart = (id) => {
-    const removeJob = [... this.state.cart]
-    const removeByFilter = removeJob.filter((job) => {
-      return job.id !== id;
-    });
-    this.setState({
-      cart: removeByFilter
-    });
-  };
+    const checkTaken = this.state.jobList.filter((job) => {
+      return job.taken
+    }).map((job) => {
+      return job.id
+    })
+
+
+    if (checkTaken.includes(id)) {
+      alert("Ops! Serviço já adicionado!")
+      return false
+    } else {
+      Axios.post(`${baseURL}/jobs/${id}`, body, key)
+        .then(() => {
+          alert("Serviço ninja adicionado ao carrinho!")
+          this.getAllJobs()
+        })
+        .catch((error) => {
+          console.log(error.response)
+        })
+    }
+  }
+
+  updateJobFalse = (id) => {
+    const body = {
+      taken: false
+    }
+    Axios.post(`${baseURL}/jobs/${id}`, body, key)
+      .then(() => {
+        alert("Serviço ninja removido do carrinho!")
+        this.getAllJobs()
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
+  }
+
+  updateAllJobsFalse = (id) => {
+    const body = {
+      taken: false
+    }
+    Axios.post(`${baseURL}/jobs/${id}`, body, key)
+      .then(() => {
+        this.getAllJobs()
+      })
+      .catch((error) => {
+        console.log(error.response)
+      })
+  }
+
+  hireAllInCart = () => {
+    const allJobsTakenFalse = this.state.jobList.filter((job) => {
+      return job.taken
+    })
+      .map((job) => {
+        return this.updateAllJobsFalse(job.id)
+      })
+
+    alert("Obrigado pela compra!")
+  }
+
+  emptyCart = () => {
+    const allJobsTakenFalse = this.state.jobList.filter((job) => {
+      return job.taken
+    })
+      .map((job) => {
+        return this.updateAllJobsFalse(job.id)
+      })
+
+    alert("Os ninjas fugiram :O")
+  }
 
   renderScreen = () => {
     switch (this.state.currentScreen) {
       case "home":
         return <Home changeScreen={this.changeScreen} />;
       case "cart":
-        return <Cart 
+        return <Cart
           changeScreen={this.changeScreen}
-          cart={this.state.cart}
-          deleteItemCart={this.deleteItemCart}
+          updateJobTrue={this.updateJobTrue}
+          updateJobFalse={this.updateJobFalse}
+          getAllJobs={this.getAllJobs}
+          jobList={this.state.jobList}
+          hireAllInCart={this.hireAllInCart}
+          emptyCart={this.emptyCart}
         />;
       case "hire":
-        return <HirePage 
-          changeScreen={this.changeScreen} 
-          getJobById={this.getJobById}
-          addToCart={this.addToCart}
+        return <HirePage
+          changeScreen={this.changeScreen}
+          getAllJobs={this.getAllJobs}
+          jobList={this.state.jobList}
+          updateJobTrue={this.updateJobTrue}
         />;
       case "register":
         return <RegisterForm changeScreen={this.changeScreen} />;
