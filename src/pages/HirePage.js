@@ -30,7 +30,6 @@ const CardContainer = styled.div`
 export default class HirePage extends React.Component {
   state = {
     jobList: [],
-    cart: [],
     job: {}
   }
 
@@ -48,23 +47,6 @@ export default class HirePage extends React.Component {
       .catch(err => { alert(err.response.data.error) })
   }
 
-  getJobById = (id) => {
-    Axios.get(`${baseURL}/jobs/${id}`, key)
-    .then(response => {
-
-      this.setState({job: response.data})
-      this.addToCart()
-    
-    })
-    .catch(err => { alert(err.response.data.error) })
-  }
-
-  addToCart = () => {
-    const jobInCart = {... this.state.job}
-    const addJob = [... this.state.cart, jobInCart]
-    this.setState({cart: addJob}) 
-  }
-
   render() {
    
     const allJobs = this.state.jobList.map(ninja => {
@@ -75,7 +57,7 @@ export default class HirePage extends React.Component {
           <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
           <div>
             <button onClick={() => this.props.changeScreen("productDetails")}>Ver Detalhes</button>
-            <button onClick={() => this.getJobById(ninja.id)}> Carrinho</button>
+            <button onClick={() => this.props.getJobById(ninja.id)}> Carrinho</button>
           </div>
         </CardJob>
       )
