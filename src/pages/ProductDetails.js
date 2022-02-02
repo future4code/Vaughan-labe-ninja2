@@ -1,7 +1,32 @@
 import React from "react";
+import moment from "moment";
 
-export default class ProductDetails extends React.Component {
+export default class ProductDetails extends React.Component {  
+
+
   render() {
-    return <div>ProductDetails</div>;
+
+    const renderDetails = this.props.jobDetails.map((info) => {
+      return ( 
+        <div key={info.id}>
+          <h3>{info.title}</h3>
+          <p>{info.description}</p>
+          <p>{info.price}</p>
+          <p>{moment.utc(info.dueDate).format('MM/DD/YYYY')}</p>
+          {info.paymentMethods.map((pay, index) => {
+            return <li key={index}>{pay}</li>
+          })}
+          <button onClick={() => this.props.changeScreen("hire")}>Continuar contratando</button>   
+          <button onClick={() => this.props.updateJobTrue(info.id)}>Adicionar ao carrinho</button>    
+        </div>
+      )
+    })
+
+    
+    console.log('jobDetils', this.props.jobDetails)
+    return <div>
+      
+      {renderDetails}
+    </div>;
   }
 }

@@ -6,12 +6,16 @@ const CartContainer = styled.div`
 
     #payment {
         display: flex;
-        justify-content: end;
-        margin-right: 32px;
+        justify-content: space-between;
+        margin: 0 32px;
 
-        button {
-            margin-left: 16px;
+        div {
+            display: flex;
+            width: 30%;
+            justify-content: space-between;
+                                
         }
+                
     }
 `
 const ItemCard = styled.div`
@@ -70,9 +74,14 @@ export default class Cart extends React.Component {
             <CartContainer>
                 {itemCart}
                 <div id="payment">
-                    <button onClick={this.props.emptyCart}>Limpar Carrinho</button>
-                    <p>Valor total: R${total()},00 </p>
-                    <button onClick={this.props.hireAllInCart}>Contratar Serviço</button>
+                    <div>
+                        <button onClick={() => this.props.changeScreen("hire")}>Continuar contratando</button>
+                        <button onClick={this.props.emptyCart}>Limpar Carrinho</button>
+                    </div>
+                    <div>
+                        <p>Valor total: R${total()},00 </p>
+                        <button onClick={this.props.hireAllInCart}>Contratar Serviço</button>
+                    </div>
                 </div>
             </CartContainer>
         )
