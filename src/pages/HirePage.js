@@ -29,10 +29,14 @@ const CardContainer = styled.div`
 
 export default class HirePage extends React.Component {
 
+  
+
   componentDidMount() {
     this.props.getAllJobs()
 
   }
+
+  
 
   render() {
 
@@ -43,7 +47,7 @@ export default class HirePage extends React.Component {
           <h3>{ninja.title}</h3>
           <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
           <div>
-            <button onClick={() => this.props.changeScreen("productDetails")}>Ver Detalhes</button>
+            <button onClick={() => this.props.getJobById(ninja.id)}>Ver Detalhes</button>
             <button onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</button>
           </div>
         </CardJob>

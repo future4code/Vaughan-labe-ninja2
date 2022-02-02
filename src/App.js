@@ -12,7 +12,8 @@ import { key } from "./constants/apiKey";
 export default class App extends React.Component {
   state = {
     currentScreen: "home",
-    jobList: []
+    jobList: [],
+    jobDetails: [],    
   };
 
   componentDidUpdate() {
@@ -27,6 +28,15 @@ export default class App extends React.Component {
     if (stuffInCart) {
       this.setState({ jobList: stuffInCart });
     }
+  }
+
+  getJobById = (id) => {
+    Axios.get(`${baseURL}/jobs/${id}`, key)
+    .then(response => {
+      this.setState({jobDetails: [response.data]})
+      this.changeScreen("productDetails")
+    })
+    .catch(err => { console.log(err.response) })
   }
 
   getAllJobs = () => {
@@ -134,11 +144,16 @@ export default class App extends React.Component {
           getAllJobs={this.getAllJobs}
           jobList={this.state.jobList}
           updateJobTrue={this.updateJobTrue}
+          getJobById={this.getJobById}
         />;
       case "register":
         return <RegisterForm changeScreen={this.changeScreen} />;
       case "productDetails":
-        return <ProductDetails changeScreen={this.changeScreen} />;
+        return <ProductDetails
+          updateJobTrue={this.updateJobTrue} 
+          changeScreen={this.changeScreen} 
+          jobDetails={this.state.jobDetails}
+        />;
       default:
         return <Home changeScreen={this.changeScreen} />;
     }
