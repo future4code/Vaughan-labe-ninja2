@@ -13,7 +13,7 @@ export default class App extends React.Component {
   state = {
     currentScreen: "home",
     jobList: [],
-    jobDetails: [],    
+    jobDetails: [],
   };
 
   componentDidUpdate() {
@@ -32,11 +32,11 @@ export default class App extends React.Component {
 
   getJobById = (id) => {
     Axios.get(`${baseURL}/jobs/${id}`, key)
-    .then(response => {
-      this.setState({jobDetails: [response.data]})
-      this.changeScreen("productDetails")
-    })
-    .catch(err => { console.log(err.response) })
+      .then(response => {
+        this.setState({ jobDetails: [response.data] })
+        this.changeScreen("productDetails")
+      })
+      .catch(err => { alert("Erro, atualize a página e tente novamente.") })
   }
 
   getAllJobs = () => {
@@ -45,7 +45,7 @@ export default class App extends React.Component {
 
         this.setState({ jobList: response.data.jobs })
       })
-      .catch(err => { alert(err.response.data.error) })
+      .catch(err => { alert("Erro, atualize a página e tente novamente.") })
   }
 
   updateJobTrue = (id) => {
@@ -70,7 +70,7 @@ export default class App extends React.Component {
           this.getAllJobs()
         })
         .catch((error) => {
-          console.log(error.response)
+          alert("Erro, atualize a página e tente novamente.")
         })
     }
   }
@@ -85,7 +85,7 @@ export default class App extends React.Component {
         this.getAllJobs()
       })
       .catch((error) => {
-        console.log(error.response)
+        alert("Erro, atualize a página e tente novamente.")
       })
   }
 
@@ -98,7 +98,7 @@ export default class App extends React.Component {
         this.getAllJobs()
       })
       .catch((error) => {
-        console.log(error.response)
+        alert("Erro, atualize a página e tente novamente.")
       })
   }
 
@@ -121,7 +121,7 @@ export default class App extends React.Component {
         return this.updateAllJobsFalse(job.id)
       })
 
-    alert("Os ninjas fugiram :O")
+    alert("Os ninjas fugiram😨!!!")
   }
 
   renderScreen = () => {
@@ -150,8 +150,8 @@ export default class App extends React.Component {
         return <RegisterForm changeScreen={this.changeScreen} />;
       case "productDetails":
         return <ProductDetails
-          updateJobTrue={this.updateJobTrue} 
-          changeScreen={this.changeScreen} 
+          updateJobTrue={this.updateJobTrue}
+          changeScreen={this.changeScreen}
           jobDetails={this.state.jobDetails}
         />;
       default:
