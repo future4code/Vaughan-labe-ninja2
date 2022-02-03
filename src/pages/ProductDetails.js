@@ -24,7 +24,7 @@ export default class ProductDetails extends React.Component {
 
     return <div>
 
-      {renderDetails}
+      {renderDetails.length === 0 ? <h1>Carregando...</h1> : renderDetails}
     </div>;
   }
 }

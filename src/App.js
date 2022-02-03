@@ -131,23 +131,20 @@ export default class App extends React.Component {
       case "cart":
         return <Cart
           changeScreen={this.changeScreen}
-          updateJobTrue={this.updateJobTrue}
           updateJobFalse={this.updateJobFalse}
-          getAllJobs={this.getAllJobs}
           jobList={this.state.jobList}
           hireAllInCart={this.hireAllInCart}
           emptyCart={this.emptyCart}
         />;
       case "hire":
         return <HirePage
-          changeScreen={this.changeScreen}
           getAllJobs={this.getAllJobs}
           jobList={this.state.jobList}
           updateJobTrue={this.updateJobTrue}
           getJobById={this.getJobById}
         />;
       case "register":
-        return <RegisterForm changeScreen={this.changeScreen} />;
+        return <RegisterForm/>;
       case "productDetails":
         return <ProductDetails
           updateJobTrue={this.updateJobTrue}

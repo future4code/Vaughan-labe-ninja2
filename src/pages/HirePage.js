@@ -94,6 +94,8 @@ export default class HirePage extends React.Component {
   }
 
   render() {
+
+    
     const allJobs = this.props.jobList
       .filter((ninja) => {
         return this.state.minPrice === "" || ninja.price >= this.state.minPrice
@@ -129,6 +131,9 @@ export default class HirePage extends React.Component {
           </CardJob>
         )
       })
+
+
+      console.log(allJobs.length);
 
     return (
       <>
@@ -169,7 +174,7 @@ export default class HirePage extends React.Component {
           <button onClick={this.onClickClear}>Limpar Filtros</button>
         </FilterContainer>
         <CardContainer>
-          {allJobs}
+          {allJobs.length === 0 ? <h1>Carregando...</h1> : allJobs}
         </CardContainer>
       </>
     )
