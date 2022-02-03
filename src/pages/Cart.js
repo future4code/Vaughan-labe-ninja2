@@ -82,6 +82,7 @@ export default class Cart extends React.Component {
         return (
             <CartContainer>
                 {itemCart}
+                {/* {itemCart.length === 0 ? <h1>Carregando...</h1> : itemCart} */}
                 {itemCart.length === 0 ? <h1>Carrinho Vazio</h1> : botoes()}
             </CartContainer>
         )
