@@ -41,20 +41,7 @@ const ItemCard = styled.div`
 
 export default class Cart extends React.Component {
 
-
-
     render() {
-        const itemCart = this.props.jobList.filter((job) => {
-            return job.taken
-        }).map((job) => {
-            return <ItemCard key={job.id}>
-                <p id="title">{job.title}</p>
-                <p id="price">R${job.price},00</p>
-                <button onClick={() => this.props.updateJobFalse(job.id)}>Deletar</button>
-            </ItemCard>
-        });
-        console.log(itemCart)
-
 
         const jobPrices = this.props.jobList.filter((job) => {
             return job.taken
@@ -70,19 +57,32 @@ export default class Cart extends React.Component {
             return sum;
         }
 
+        const itemCart = this.props.jobList.filter((job) => {
+            return job.taken
+        }).map((job) => {
+            return <ItemCard key={job.id}>
+                <p id="title">{job.title}</p>
+                <p id="price">R${job.price},00</p>
+                <button onClick={() => this.props.updateJobFalse(job.id)}>Deletar</button>
+            </ItemCard>
+        });
+
+        const botoes = () => {
+            return <div id="payment">
+                <div>
+                    <button onClick={() => this.props.changeScreen("hire")}>Continuar contratando</button>
+                    <button onClick={this.props.emptyCart}>Limpar Carrinho</button>
+                </div>
+                <div>
+                    <p>Valor total: R${total()},00 </p>
+                    <button onClick={this.props.hireAllInCart}>Contratar Serviço</button>
+                </div>
+            </div>
+        }
         return (
             <CartContainer>
                 {itemCart}
-                <div id="payment">
-                    <div>
-                        <button onClick={() => this.props.changeScreen("hire")}>Continuar contratando</button>
-                        <button onClick={this.props.emptyCart}>Limpar Carrinho</button>
-                    </div>
-                    <div>
-                        <p>Valor total: R${total()},00 </p>
-                        <button onClick={this.props.hireAllInCart}>Contratar Serviço</button>
-                    </div>
-                </div>
+                {itemCart.length === 0 ? <h1>Carrinho Vazio</h1> : botoes()}
             </CartContainer>
         )
     }
