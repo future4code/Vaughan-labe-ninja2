@@ -1,7 +1,5 @@
 import Axios from "axios";
 import React from "react";
-import { baseURL } from "../constants/baseURL";
-import { key } from "../constants/apiKey"
 import moment from "moment";
 import styled from "styled-components";
 
@@ -35,20 +33,48 @@ const FilterContainer = styled.div`
 
 export default class HirePage extends React.Component {
 
-  
+  state={
+    query: "",
+    minPrice: "",
+    maxPrice: ""
+  }
 
   componentDidMount() {
     this.props.getAllJobs()
-
   }
 
-  
+  onChangeQuery = (event) => {
+    this.setState({
+      query: event.target.value
+    })
+  }
+
+  onChangeMinPrice = (event) => {
+    this.setState({
+      minPrice: event.target.value
+    })
+  }
+
+  onChangeMaxPrice = (event) => {
+    this.setState({
+      maxPrice: event.target.value
+    })
+  }
 
   render() {
-
-    const allJobs = this.props.jobList.map(ninja => {
+    const allJobs = this.props.jobList
+    .filter((ninja) => {
+      return this.state.minPrice === "" || ninja.price >= this.state.minPrice  
+    })
+    .filter((ninja) => {
+      return this.state.maxPrice === "" || ninja.price <= this.state.maxPrice 
+    })
+    .filter( (ninja) => {
+      return ninja.title.toLowerCase().includes(this.state.query.toLowerCase()) ||
+        ninja.description.toLowerCase().includes(this.state.query.toLowerCase()) 
+    })
+    .map(ninja => {
       return (
-
         <CardJob key={ninja.id}>
           <h3>{ninja.title}</h3>
           <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
@@ -59,32 +85,47 @@ export default class HirePage extends React.Component {
         </CardJob>
       )
     })
+
     return (
     <>
     <FilterContainer>
-    <label>
-      <input placeholder="Preço Min"/>
-    </label>
-    <label>
-      <input placeholder="Preço Max"/>
-    </label>
-    <label>
-      <input placeholder="Busca por Nome"/>
-    </label>
-    <select>
-      <option>Sem Ordenação</option>
-      <option>Preço</option>
-      <option>Titulo</option>
-      <option>Prazo</option>
-    </select>
-    <select>
-      <option>Crescente</option>
-      <option>Decrescente</option>
-    </select>
+      <label>
+        <input 
+          placeholder="Preço Min"
+          type="number"
+          value={this.state.minPrice}
+          onChange={this.onChangeMinPrice}
+        />
+      </label>
+      <label>
+        <input 
+          placeholder="Preço Max"
+          type="number"
+          value={this.state.maxPrice}
+          onChange={this.onChangeMaxPrice}
+        />
+      </label>
+      <label>
+        <input 
+          placeholder="Busca por Nome"
+          value={this.state.query}
+          onChange={this.onChangeQuery}
+        />
+      </label>
+      <select>
+        <option>Sem Ordenação</option>
+        <option>Preço</option>
+        <option>Titulo</option>
+        <option>Prazo</option>
+      </select>
+      <select>
+        <option>Crescente</option>
+        <option>Decrescente</option>
+      </select>
     </FilterContainer>
     <CardContainer>
       {allJobs}
-    </CardContainer>;
+    </CardContainer>
     </>
     )
   }
