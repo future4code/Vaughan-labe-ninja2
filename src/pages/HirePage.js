@@ -24,7 +24,13 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 15px;
-  margin-top: 5%; 
+  margin-top: 2%; 
+`
+
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2%;
 `
 
 export default class HirePage extends React.Component {
@@ -53,8 +59,33 @@ export default class HirePage extends React.Component {
         </CardJob>
       )
     })
-    return <CardContainer>
+    return (
+    <>
+    <FilterContainer>
+    <label>
+      <input placeholder="Preço Min"/>
+    </label>
+    <label>
+      <input placeholder="Preço Max"/>
+    </label>
+    <label>
+      <input placeholder="Busca por Nome"/>
+    </label>
+    <select>
+      <option>Sem Ordenação</option>
+      <option>Preço</option>
+      <option>Titulo</option>
+      <option>Prazo</option>
+    </select>
+    <select>
+      <option>Crescente</option>
+      <option>Decrescente</option>
+    </select>
+    </FilterContainer>
+    <CardContainer>
       {allJobs}
     </CardContainer>;
+    </>
+    )
   }
 }
