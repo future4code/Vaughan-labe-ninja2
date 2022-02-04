@@ -8,6 +8,9 @@ import ProductDetails from "./pages/ProductDetails";
 import { baseURL } from "./constants/baseURL";
 import Axios from "axios";
 import { key } from "./constants/apiKey";
+import '@fontsource/roboto/700.css';
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
 
 export default class App extends React.Component {
   state = {
@@ -162,10 +165,10 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <ThemeProvider theme={theme}>
         <Header changeScreen={this.changeScreen}></Header>
         {this.renderScreen()}
-      </div>
+      </ThemeProvider>
     );
   }
 }
