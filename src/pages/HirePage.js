@@ -8,6 +8,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const CardJob = styled.div`
 
@@ -148,51 +152,77 @@ export default class HirePage extends React.Component {
     return (
       <>
         <FilterContainer>
-        <Box
-        component="form"
-        sx={{
-          '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-        noValidate
-        autoComplete="off"
-        >
-      <label>
-            <TextField id="outlined-basic" label="Preço Mínimo" variant="outlined"
-              placeholder="R$"
-              type="number"
-              value={this.state.minPrice}
-              onChange={this.onChangeMinPrice}
-            />
-          </label>
+          <Box
+            component="form"
+            sx={{
+              '& > :not(style)': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <label>
+              <TextField id="outlined-basic" label="Preço Mínimo" variant="outlined"
+                placeholder="R$"
+                type="number"
+                value={this.state.minPrice}
+                onChange={this.onChangeMinPrice}
+                sx={{borderBottom: 1, borderRadius: 1 }}
+              />
+            </label>
 
-          <label>
-            <TextField id="outlined-basic" label="Preço Máximo" variant="outlined"
-              placeholder="R$"
-              type="number"
-              value={this.state.maxPrice}
-              onChange={this.onChangeMaxPrice}
-            />
-          </label>
+            <label>
+              <TextField id="outlined-basic" label="Preço Máximo" variant="outlined"
+                placeholder="R$"
+                type="number"
+                value={this.state.maxPrice}
+                onChange={this.onChangeMaxPrice}
+                sx={{borderBottom: 1, borderRadius: 1 }}
+              />
+            </label>
 
-          <label>
-            <TextField id="outlined-basic" label="Busca" variant="outlined"
-              placeholder="Busca por Nome"
-              value={this.state.query}
-              onChange={this.onChangeQuery}
-            />
-          </label>
-      </Box> 
-         
-          <select onChange={this.onChangeSortingParameter} value={this.state.sortingParameter}>
-            <option>Sem Ordenação</option>
-            <option>Preço</option>
-            <option>Titulo</option>
-            <option>Prazo</option>
-          </select>
-          <select onChange={this.onChangeOrder} value={this.state.order}>
-            <option >Crescente</option>
-            <option >Decrescente</option>
-          </select>
+            <label>
+              <TextField id="outlined-basic" label="Busca" variant="outlined"
+                placeholder="Busca por Nome"
+                value={this.state.query}
+                onChange={this.onChangeQuery}
+                sx={{borderBottom: 1, borderRadius: 1 }}
+              />
+            </label>
+          </Box>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
+              <Select 
+                onChange={this.onChangeSortingParameter} 
+                value={this.state.sortingParameter}
+                label="Ordenar por"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+              >
+                <MenuItem value={"Sem Ordenação"}>Sem Ordenação</MenuItem>
+                <MenuItem value={"Preço"}>Preço</MenuItem>
+                <MenuItem value={"Título"}>Titulo</MenuItem>
+                <MenuItem value={"Prazo"}>Prazo</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Ordem</InputLabel>
+              <Select 
+                onChange={this.onChangeOrder}
+                value={this.state.order}
+                label="Ordem"
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+              >
+                <MenuItem value={"Crescente"}>Crescente</MenuItem>
+                <MenuItem value={"Decrescente"}>Decrescente</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <Button variant="contained"  onClick={this.onClickClear}>Limpar Filtros</Button>
         </FilterContainer>
         

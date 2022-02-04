@@ -15,11 +15,10 @@ const Logo = styled.div`
 `
 
 const Headers = styled.div`
-  /* border: 1px solid black; */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 15px;
+  padding: 20px 15px;
   background-color: #F5F4FC;
 `;
 
