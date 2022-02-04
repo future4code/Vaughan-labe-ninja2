@@ -3,27 +3,31 @@ import React from "react";
 import styled from "styled-components";
 import { key } from "../constants/apiKey";
 import { baseURL } from "../constants/baseURL";
+import Button from '@mui/material/Button';
 
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 5%;
+  margin: 5% auto;
+  border: solid 1px black;
+  width: 40%;
+  
 
   input {
     margin: 5px 0;
-    width: 13%;
+  
   }
 
   button {
-    margin-top: 2%;
+    margin: 2%;
   }
 `;
 
 const DivCheckbox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 13%;
+  width: 45%;
 `;
 
 export default class RegisterForm extends React.Component {
@@ -198,7 +202,7 @@ export default class RegisterForm extends React.Component {
           onChange={this.handleDeadline}
           value={this.state.deadline}
         />
-        <button onClick={this.createJob}> Cadastrar Serviços</button>
+        <Button variant="contained" onClick={this.createJob}> Cadastrar Serviços</Button>
       </FormContainer>
     );
   }

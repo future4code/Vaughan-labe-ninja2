@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Button from '@mui/material/Button';
 
 const CartContainer = styled.div`
     margin-top: 2%;
@@ -63,19 +64,19 @@ export default class Cart extends React.Component {
             return <ItemCard key={job.id}>
                 <p id="title">{job.title}</p>
                 <p id="price">R${job.price},00</p>
-                <button onClick={() => this.props.updateJobFalse(job.id)}>Deletar</button>
+                <Button variant="contained"  onClick={() => this.props.updateJobFalse(job.id)}>Deletar</Button>
             </ItemCard>
         });
 
         const botoes = () => {
             return <div id="payment">
                 <div>
-                    <button onClick={() => this.props.changeScreen("hire")}>Continuar contratando</button>
-                    <button onClick={this.props.emptyCart}>Limpar Carrinho</button>
+                    <Button variant="contained" onClick={() => this.props.changeScreen("hire")}>Continuar contratando</Button>
+                    <Button variant="contained" onClick={this.props.emptyCart}>Limpar Carrinho</Button>
                 </div>
                 <div>
                     <p>Valor total: R${total()},00 </p>
-                    <button onClick={this.props.hireAllInCart}>Contratar Serviço</button>
+                    <Button variant="contained" onClick={this.props.hireAllInCart}>Contratar Serviço</Button>
                 </div>
             </div>
         }

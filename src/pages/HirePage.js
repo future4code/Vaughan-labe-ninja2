@@ -2,6 +2,7 @@ import Axios from "axios";
 import React from "react";
 import moment from "moment";
 import styled from "styled-components";
+import Button from '@mui/material/Button';
 
 const CardJob = styled.div`
 
@@ -125,15 +126,15 @@ export default class HirePage extends React.Component {
             <h3>{ninja.title}</h3>
             <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
             <div>
-              <button onClick={() => this.props.getJobById(ninja.id)}>Ver Detalhes</button>
-              <button onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</button>
+              <Button variant="contained"  onClick={() => this.props.getJobById(ninja.id)}>Ver Detalhes</Button>
+              <Button variant="contained"  onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</Button>
             </div>
           </CardJob>
         )
       })
 
 
-      console.log(allJobs.length);
+
 
     return (
       <>
@@ -171,7 +172,7 @@ export default class HirePage extends React.Component {
             <option >Crescente</option>
             <option >Decrescente</option>
           </select>
-          <button onClick={this.onClickClear}>Limpar Filtros</button>
+          <Button variant="contained"  onClick={this.onClickClear}>Limpar Filtros</Button>
         </FilterContainer>
         <CardContainer>
           {allJobs.length === 0 ? <h1>Carregando...</h1> : allJobs}
