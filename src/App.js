@@ -12,6 +12,7 @@ import '@fontsource/roboto/700.css';
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
 
+
 export default class App extends React.Component {
   state = {
     currentScreen: "home",
@@ -165,8 +166,8 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <ThemeProvider theme={theme}>
-        <Header changeScreen={this.changeScreen}></Header>
+      <ThemeProvider theme={theme} >
+        <Header sx={{bgcolor: '#F5F4FC'}} changeScreen={this.changeScreen}></Header>
         {this.renderScreen()}
       </ThemeProvider>
     );
