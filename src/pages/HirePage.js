@@ -3,10 +3,15 @@ import React from "react";
 import moment from "moment";
 import styled from "styled-components";
 import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 const CardJob = styled.div`
 
-  border: solid 1px black;
+  /* border: solid 1px black; */
   padding: 10px;
   h3{
     text-align: center;
@@ -23,7 +28,7 @@ const CardContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 15px;
-  margin-top: 2%; 
+  margin: 2%; 
 `
 
 const FilterContainer = styled.div`
@@ -122,14 +127,18 @@ export default class HirePage extends React.Component {
       })
       .map(ninja => {
         return (
-          <CardJob key={ninja.id}>
+          <Card key={ninja.id} sx={{textAlign: 'center', bgcolor: '#F5F4FC'}}>
+          <CardJob >
             <h3>{ninja.title}</h3>
+            <br/>
             <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
+            <br/>
             <div>
-              <Button variant="contained"  onClick={() => this.props.getJobById(ninja.id)}>Ver Detalhes</Button>
-              <Button variant="contained"  onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</Button>
+              <Button sx={{width: 110}} variant="contained"  onClick={() => this.props.getJobById(ninja.id)}>Detalhes</Button>
+              <Button sx={{width: 110}} variant="contained"  onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</Button>
             </div>
           </CardJob>
+          </Card>
         )
       })
 
@@ -139,29 +148,41 @@ export default class HirePage extends React.Component {
     return (
       <>
         <FilterContainer>
-          <label>
-            <input
-              placeholder="Preço Min"
+        <Box
+        component="form"
+        sx={{
+          '& > :not(style)': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+        >
+      <label>
+            <TextField id="outlined-basic" label="Preço Mínimo" variant="outlined"
+              placeholder="R$"
               type="number"
               value={this.state.minPrice}
               onChange={this.onChangeMinPrice}
             />
           </label>
+
           <label>
-            <input
-              placeholder="Preço Max"
+            <TextField id="outlined-basic" label="Preço Máximo" variant="outlined"
+              placeholder="R$"
               type="number"
               value={this.state.maxPrice}
               onChange={this.onChangeMaxPrice}
             />
           </label>
+
           <label>
-            <input
+            <TextField id="outlined-basic" label="Busca" variant="outlined"
               placeholder="Busca por Nome"
               value={this.state.query}
               onChange={this.onChangeQuery}
             />
           </label>
+      </Box> 
+         
           <select onChange={this.onChangeSortingParameter} value={this.state.sortingParameter}>
             <option>Sem Ordenação</option>
             <option>Preço</option>
@@ -174,9 +195,11 @@ export default class HirePage extends React.Component {
           </select>
           <Button variant="contained"  onClick={this.onClickClear}>Limpar Filtros</Button>
         </FilterContainer>
+        
         <CardContainer>
           {allJobs.length === 0 ? <h1>Carregando...</h1> : allJobs}
         </CardContainer>
+        
       </>
     )
   }
