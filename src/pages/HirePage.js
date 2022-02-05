@@ -1,11 +1,8 @@
-import Axios from "axios";
 import React from "react";
 import moment from "moment";
 import styled from "styled-components";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
@@ -14,8 +11,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 const CardJob = styled.div`
-
-  /* border: solid 1px black; */
   padding: 10px;
   h3{
     text-align: center;
@@ -105,7 +100,7 @@ export default class HirePage extends React.Component {
 
   render() {
 
-    
+
     const allJobs = this.props.jobList
       .filter((ninja) => {
         return this.state.minPrice === "" || ninja.price >= this.state.minPrice
@@ -131,17 +126,17 @@ export default class HirePage extends React.Component {
       })
       .map(ninja => {
         return (
-          <Card key={ninja.id} sx={{textAlign: 'center', bgcolor: '#F5F4FC'}}>
-          <CardJob >
-            <h3>{ninja.title}</h3>
-            <br/>
-            <p>Até {moment.utc(ninja.dueDate).format('MM/DD/YYYY')} por <strong>R${ninja.price},00</strong></p>
-            <br/>
-            <div>
-              <Button sx={{width: 110}} variant="contained"  onClick={() => this.props.getJobById(ninja.id)}>Detalhes</Button>
-              <Button sx={{width: 110}} variant="contained"  onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</Button>
-            </div>
-          </CardJob>
+          <Card key={ninja.id} sx={{ textAlign: 'center', bgcolor: '#F5F4FC' }}>
+            <CardJob >
+              <h3>{ninja.title}</h3>
+              <br />
+              <p>Até {moment.utc(ninja.dueDate).format('DD/MM/YYYY')} por <strong>R${ninja.price},00</strong></p>
+              <br />
+              <div>
+                <Button sx={{ width: 110 }} variant="contained" onClick={() => this.props.getJobById(ninja.id)}>Detalhes</Button>
+                <Button sx={{ width: 110 }} variant="contained" onClick={() => this.props.updateJobTrue(ninja.id)}> Carrinho</Button>
+              </div>
+            </CardJob>
           </Card>
         )
       })
@@ -166,7 +161,7 @@ export default class HirePage extends React.Component {
                 type="number"
                 value={this.state.minPrice}
                 onChange={this.onChangeMinPrice}
-                sx={{borderBottom: 1, borderRadius: 1 }}
+                sx={{ borderBottom: 1, borderRadius: 1 }}
               />
             </label>
 
@@ -176,7 +171,7 @@ export default class HirePage extends React.Component {
                 type="number"
                 value={this.state.maxPrice}
                 onChange={this.onChangeMaxPrice}
-                sx={{borderBottom: 1, borderRadius: 1 }}
+                sx={{ borderBottom: 1, borderRadius: 1 }}
               />
             </label>
 
@@ -185,7 +180,7 @@ export default class HirePage extends React.Component {
                 placeholder="Busca por Nome"
                 value={this.state.query}
                 onChange={this.onChangeQuery}
-                sx={{borderBottom: 1, borderRadius: 1 }}
+                sx={{ borderBottom: 1, borderRadius: 1 }}
               />
             </label>
           </Box>
@@ -193,8 +188,8 @@ export default class HirePage extends React.Component {
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Ordenar por</InputLabel>
-              <Select 
-                onChange={this.onChangeSortingParameter} 
+              <Select
+                onChange={this.onChangeSortingParameter}
                 value={this.state.sortingParameter}
                 label="Ordenar por"
                 labelId="demo-simple-select-label"
@@ -211,7 +206,7 @@ export default class HirePage extends React.Component {
           <Box sx={{ minWidth: 120 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Ordem</InputLabel>
-              <Select 
+              <Select
                 onChange={this.onChangeOrder}
                 value={this.state.order}
                 label="Ordem"
@@ -223,13 +218,13 @@ export default class HirePage extends React.Component {
               </Select>
             </FormControl>
           </Box>
-          <Button variant="contained"  onClick={this.onClickClear}>Limpar Filtros</Button>
+          <Button variant="contained" onClick={this.onClickClear}>Limpar Filtros</Button>
         </FilterContainer>
-        
+
         <CardContainer>
           {allJobs.length === 0 ? <h1>Carregando...</h1> : allJobs}
         </CardContainer>
-        
+
       </>
     )
   }

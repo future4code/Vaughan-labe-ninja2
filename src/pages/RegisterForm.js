@@ -4,25 +4,18 @@ import styled from "styled-components";
 import { key } from "../constants/apiKey";
 import { baseURL } from "../constants/baseURL";
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
+import CardContent from '@mui/material/CardContent';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 5% auto;
-  border: solid 1px black;
-  width: 40%;
-  
-
-  input {
-    margin: 5px 0;
-  
-  }
-
-  button {
-    margin: 2%;
-  }
-`;
+import DateAdapter from '@mui/lab/AdapterMoment';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
 const DivCheckbox = styled.div`
   display: flex;
@@ -137,73 +130,89 @@ export default class RegisterForm extends React.Component {
   render() {
 
     return (
-      <FormContainer>
-        <h2>Cadastre Seu Serviço</h2>
-        <input
-          placeholder="Titulo"
-          onChange={this.handleTitle}
-          value={this.state.title}
-        />
-        <input
-          placeholder="Descrição"
-          onChange={this.handleDescription}
-          value={this.state.description}
-        />
-        <input
-          type="number"
-          placeholder="Preço"
-          onChange={this.handlePriceTag}
-          value={this.state.pricetag}
-        />
-        <DivCheckbox>
-          <div>
-            <input
-              type="checkbox"
+      <Card sx={{ width: 500, margin: "auto", mt: 10, textAlign: 'center', bgcolor: '#F5F4FC' }}>
+        <CardContent sx={{ alignItems: 'center' }}>
+          <Typography variant="h3" component="div" sx={{ mb: 2.5 }}>Cadastre Seu Serviço</Typography>
+          <Box
+            component="form"
+            sx={{
+              alignItems: 'center',
+              '& > :not(style)': { m: 1, width: '25ch' }
+            }}
+            noValidate
+            autoComplete="off"
+          >
+
+            <label>
+              <TextField id="outlined-basic" label="Título" variant="outlined"
+                placeholder="Título"
+                value={this.state.title}
+                onChange={this.handleTitle}
+                sx={{ borderBottom: 1, borderRadius: 1, mb: 2, width: '80%' }}
+              />
+            </label>
+            <label>
+              <TextField id="outlined-basic" label="Descrição" variant="outlined"
+                placeholder="Descrição"
+                value={this.state.description}
+                onChange={this.handleDescription}
+                sx={{ borderBottom: 1, borderRadius: 1, mb: 2, width: '80%' }}
+              />
+            </label>
+            <label>
+              <TextField id="outlined-basic" label="Preço" variant="outlined"
+                placeholder="R$"
+                type="number"
+                value={this.state.pricetag}
+                onChange={this.handlePriceTag}
+                sx={{ borderBottom: 1, borderRadius: 1, mb: 2, width: '80%' }}
+              />
+            </label>
+
+          </Box>
+
+          <Typography variant="h6" component="div" sx={{ mb: 2 }}>Formas de Pagamento</Typography>
+          <FormGroup sx={{ width: '80%', margin: 'auto' }}>
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
               onChange={this.handleCredit}
               checked={this.state.checkCredit}
-            />
-            Cartão de Crédito
-          </div>
-          <div>
-            <input
-              type="checkbox"
+              label="Cartão de Crédito" />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
               onChange={this.handleDebit}
               checked={this.state.checkDebit}
-            />{" "}
-            Cartão de Débito
-          </div>
-          <div>
-            <input
-              type="checkbox"
+              label="Cartão de Débito" />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
               onChange={this.handleInvoice}
               checked={this.state.checkInvoice}
-            />{" "}
-            Boleto
-          </div>
-          <div>
-            <input
-              type="checkbox"
+              label="Boleto" />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
               onChange={this.handlePaypal}
               checked={this.state.checkPaypal}
-            />{" "}
-            Paypal
-          </div>
-          <div>
-            <input
-              type="checkbox"
+              label="Paypal" />
+            <FormControlLabel
+              control={<Checkbox defaultChecked />}
               onChange={this.handlePix}
               checked={this.state.checkPix}
-            />{" "}
-            Pix
-          </div>
-        </DivCheckbox>
-        <input
-          type="date"
-          onChange={this.handleDeadline}
-          value={this.state.deadline}
-        />
-        <Button variant="contained" onClick={this.createJob}> Cadastrar Serviços</Button>
-      </FormContainer>
+              label="Pix" />
+          </FormGroup>
+
+          {/* <LocalizationProvider dateAdapter={DateAdapter} sx={{ border: '7D67C5' }}>
+          <DatePicker
+            label="Basic example"
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider> */}
+          <Button variant="contained" onClick={this.createJob}>Cadastrar Serviços</Button>
+        </CardContent>
+      </Card>
     );
   }
 }
