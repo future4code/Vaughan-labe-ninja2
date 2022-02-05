@@ -12,23 +12,18 @@ import CardContent from '@mui/material/CardContent';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import moment from "moment";
 
 import DateAdapter from '@mui/lab/AdapterMoment';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
-
-const DivCheckbox = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-`;
 
 export default class RegisterForm extends React.Component {
   state = {
     title: "",
     pricetag: "",
     description: "",
-    deadline: "",
+    deadline: moment().format('MM/DD/YYYY'),
     checkCredit: false,
     checkDebit: false,
     checkPaypal: false,
@@ -46,10 +41,6 @@ export default class RegisterForm extends React.Component {
 
   handleDescription = (event) => {
     this.setState({ description: event.target.value });
-  };
-
-  handleDeadline = (event) => {
-    this.setState({ deadline: event.target.value });
   };
 
   handleCredit = (event) => {
@@ -114,7 +105,7 @@ export default class RegisterForm extends React.Component {
           title: "",
           pricetag: "",
           description: "",
-          deadline: "",
+          deadline: moment().format('MM/DD/YYYY'),
           checkCredit: false,
           checkDebit: false,
           checkPaypal: false,
@@ -123,6 +114,7 @@ export default class RegisterForm extends React.Component {
         });
       })
       .catch((err) => {
+        console.log(err.response)
         alert(`Ops! a tentativa de criar um novo ninja falhou. Tente Novamente`)
       });
   };
@@ -199,18 +191,24 @@ export default class RegisterForm extends React.Component {
               checked={this.state.checkPix}
               label="Pix" />
           </FormGroup>
-
-          {/* <LocalizationProvider dateAdapter={DateAdapter} sx={{ border: '7D67C5' }}>
-          <DatePicker
-            label="Basic example"
-            value={value}
-            onChange={(newValue) => {
-              setValue(newValue);
-            }}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider> */}
-          <Button variant="contained" onClick={this.createJob}>Cadastrar Serviços</Button>
+          <br />
+          <LocalizationProvider dateAdapter={DateAdapter}>
+            <DatePicker
+              label="Prazo"
+              value={this.state.deadline}
+              onChange={(newValue) => {
+                this.setState({ deadline: newValue });
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          <div>
+            <Button
+              variant="contained"
+              onClick={this.createJob}
+              sx={{ mt: 2 }}
+            >Cadastrar Serviços</Button>
+          </div>
         </CardContent>
       </Card>
     );
