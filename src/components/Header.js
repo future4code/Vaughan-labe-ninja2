@@ -20,6 +20,10 @@ const Headers = styled.div`
   align-items: center;
   padding: 20px 15px;
   background-color: #F5F4FC;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `;
 
 export default class Header extends Component {
@@ -27,8 +31,8 @@ export default class Header extends Component {
     return (
       <Headers>
         <Logo>
-        <img src={littlelogo} /> 
-        <Typography variant="h5">LabeNinjaS2</Typography>
+          <img src={littlelogo} />
+          <Typography variant="h5">LabeNinjaS2</Typography>
         </Logo>
         <div>
           <Button variant="contained" sx={{ m: 1 }} onClick={() => this.props.changeScreen("home")}>Home</Button>

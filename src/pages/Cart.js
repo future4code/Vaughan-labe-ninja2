@@ -1,14 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
 import Button from '@mui/material/Button';
+import emptyCart from '../images/emptyCart.png'
+import Typography from '@mui/material/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 const CartContainer = styled.div`
-    margin-top: 2%;
+    height: calc(100vh - 92.5px);
+
+    img{
+        width: 30%;
+        height: 70%;
+    }
 
     #payment {
         display: flex;
         justify-content: space-between;
-        margin: 0 32px;
 
         div {
             display: flex;
@@ -19,24 +27,20 @@ const CartContainer = styled.div`
                 
     }
 `
-const ItemCard = styled.div`
-    display: grid;
-    grid-template-columns: 5fr 1fr 1fr;
-    border: 1px solid black;
-    justify-items: center;
-    margin: 16px 32px;
-    padding: 10px;
-    
-    #title {
-        justify-self: start;
-    }
 
-    #price {
-        justify-self: end;
-    }
+const EmptyCart = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+`
 
-    button {
-        justify-self: end;
+const CartPrice = styled.div`
+    p{
+        display: flex;
+        align-items: center;
     }
 `
 
@@ -61,30 +65,37 @@ export default class Cart extends React.Component {
         const itemCart = this.props.jobList.filter((job) => {
             return job.taken
         }).map((job) => {
-            return <ItemCard key={job.id}>
-                <p id="title">{job.title}</p>
-                <p id="price">R${job.price},00</p>
-                <Button variant="contained"  onClick={() => this.props.updateJobFalse(job.id)}>Deletar</Button>
-            </ItemCard>
+            return <Card sx={{ width: '95vw', margin: "auto", mt: 2, bgcolor: '#F5F4FC' }} key={job.id}>
+                <CardContent sx={{ display: 'grid', gridTemplateColumns: '5fr 1fr 1fr', alignItems: 'center' }}>
+                    <p id="title"><strong>{job.title}</strong></p>
+                    <p id="price">R${job.price},00</p>
+                    <Button variant="contained" onClick={() => this.props.updateJobFalse(job.id)} sx={{ width: 100, justifySelf: 'flex-end' }}>Deletar</Button>
+                </CardContent>
+            </Card>
         });
 
         const botoes = () => {
-            return <div id="payment">
-                <div>
-                    <Button variant="contained" onClick={() => this.props.changeScreen("hire")}>Continuar contratando</Button>
-                    <Button variant="contained" onClick={this.props.emptyCart}>Limpar Carrinho</Button>
-                </div>
-                <div>
-                    <p>Valor total: R${total()},00 </p>
-                    <Button variant="contained" onClick={this.props.hireAllInCart}>Contratar Serviço</Button>
-                </div>
-            </div>
+            return <Card sx={{ width: '95vw', margin: "auto", mt: 2 }}>
+                <CardContent sx={{ alignItems: 'center' }} id="payment">
+                    <div>
+                        <Button variant="contained" onClick={() => this.props.changeScreen("hire")}>Continuar contratando</Button>
+                        <Button variant="contained" onClick={this.props.emptyCart}>Limpar Carrinho</Button>
+                    </div>
+                    <CartPrice>
+                        <p>Valor total: R${total()},00 </p>
+                        <Button variant="contained" onClick={this.props.hireAllInCart}>Contratar Serviço</Button>
+                    </CartPrice>
+                </CardContent>
+            </Card>
         }
         return (
             <CartContainer>
                 {itemCart}
-                {/* {itemCart.length === 0 ? <h1>Carregando...</h1> : itemCart} */}
-                {itemCart.length === 0 ? <h1>Carrinho Vazio</h1> : botoes()}
+                {itemCart.length === 0
+                    ? (<EmptyCart><img src={emptyCart} />
+                        <Typography sx={{ mt: 2, textAlign: 'center', fontSize: 24, ml: 5, color: '#7D67C5' }}>Seu carrinho está vazio</Typography>
+                    </EmptyCart>)
+                    : botoes()}
             </CartContainer>
         )
     }

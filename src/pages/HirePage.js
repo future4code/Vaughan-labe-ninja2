@@ -116,7 +116,7 @@ export default class HirePage extends React.Component {
         switch (this.state.sortingParameter) {
           case "Preço":
             return this.factor() * (currentValue.price - nextValue.price)
-          case "Titulo":
+          case "Título":
             return this.factor() * currentValue.title.localeCompare(nextValue.title)
           case "Prazo":
             return this.factor() * (new Date(currentValue.dueDate).getTime() - new Date(nextValue.dueDate).getTime())
@@ -130,7 +130,7 @@ export default class HirePage extends React.Component {
             <CardJob >
               <h3>{ninja.title}</h3>
               <br />
-              <p>Até {moment.utc(ninja.dueDate).format('DD/MM/YYYY')} por <strong>R${ninja.price},00</strong></p>
+              <p>Até {moment.utc(ninja.dueDate).format('DD/MM/YYYY')} por <strong>R${ninja.price.toFixed(2).replace(".", ",")}</strong></p>
               <br />
               <div>
                 <Button sx={{ width: 110 }} variant="contained" onClick={() => this.props.getJobById(ninja.id)}>Detalhes</Button>
@@ -218,7 +218,7 @@ export default class HirePage extends React.Component {
               </Select>
             </FormControl>
           </Box>
-          <Button variant="contained" onClick={this.onClickClear}>Limpar Filtros</Button>
+          <Button variant="contained" sx={{ height: 35 }} onClick={this.onClickClear}>Limpar Filtros</Button>
         </FilterContainer>
 
         <CardContainer>

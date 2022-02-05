@@ -20,6 +20,21 @@ const HomeContainer = styled.div`
     width: 40vw;
     height: 80vh;
   } 
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+
+    div {
+      p{
+        display: none;
+      }
+    }
+
+    img {
+      width: 90vw;
+      height: 90vw;
+    }
+  }
 `;
 
 export default class Home extends React.Component {
@@ -27,17 +42,17 @@ export default class Home extends React.Component {
     return (
       <HomeContainer>
         <div>
-          <Typography sx = {{mb: 2, textAlign: 'justify', fontSize:24, mb:5}}>
-          Labeninjas é uma startup destinada à busca e oferta de prestações de serviço. Aqui, os ninjas podem oferecer seus serviços livremente, enquanto as pessoas com demandas específicas podem encontrar perfis bem alinhados ao que precisam.
+          <Typography sx={{ mb: 2, textAlign: 'justify', fontSize: 24, mb: 5 }}>
+            Labeninjas é uma startup destinada à busca e oferta de prestações de serviço. Aqui, os ninjas podem oferecer seus serviços livremente, enquanto as pessoas com demandas específicas podem encontrar perfis bem alinhados ao que precisam.
           </Typography>
           <Button variant="contained" sx={{ mr: 1 }} onClick={() => this.props.changeScreen("hire")}>
             Contratar um ninja
           </Button>
-          <Button variant="contained" sx={{ mr: 1 }}  onClick={() => this.props.changeScreen("register")}>
+          <Button variant="contained" sx={{ mr: 1 }} onClick={() => this.props.changeScreen("register")}>
             Quero ser um ninja
           </Button>
-        </div>        
-        <img src={logo} alt='logo com ninja'/>        
+        </div>
+        <img src={logo} alt='logo com ninja' />
       </HomeContainer>
     );
   }
